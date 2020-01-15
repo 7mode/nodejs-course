@@ -3,9 +3,15 @@ const express = require('express')
 
 const app = express()
 
+// Define paths for express explore
 const publicDirectoryPath = path.join(__dirname, '../public');
+const viewPath = path.join(__dirname, '../templates');
 
+// Setup handle bars and view location
 app.set('view engine', 'hbs')
+app.set('views', viewPath)
+
+// setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
 app.get('/', (req, res) => {
