@@ -34,15 +34,31 @@ app.get('/about', (req, res) => {
 app.get('/help', (req, res) => {
     res.render('help', {
         title: 'Help',
-        helpText: 'This is some helpful text.'
+        helpText: 'This is some helpful text.',
+        name: 'Muhamad Najjar'
     })
 })
 
-// help route get
 app.get('/weather', (req, res) => {
     res.send({
         forecast: 'Cloudy',
         location: 'Tel Aviv'
+    })
+})
+
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'Muhamad Najjar',
+        errorMessage: 'Help article not found'
+    })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'Muhamad Najjar',
+        errorMessage: 'Page not found'
     })
 })
 
