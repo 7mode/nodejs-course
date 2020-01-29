@@ -1,7 +1,6 @@
 // CRUD - create read update delete
 
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
+const { MongoClient, ObjectID } = require('mongodb')
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
@@ -12,49 +11,27 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true }, (error, client) => 
     }
     const db = client.db(databaseName);
 
-    // db.collection('users').insertOne({
-    //     name: 'Muhamad',
-    //     age: 25
-    // }, (error, result) => {
-    //     if (error) {
-    //         console.log('Unable to insert user')
-    //     }
-    //
-    //     console.log(result.ops)
-    // })
-
-    // db.collection('users').insertMany([
-    //     {
-    //         name: 'Maralia',
-    //         age: 29
-    //     }, {
-    //         name: 'Gunther',
-    //         age: 26
-    //     }
-    // ], (error, result) => {
-    //     if (error) {
-    //         console.log('Unable to insert documents')
-    //     }
-    //
-    //     console.log(result.ops)
-    // })
-
-    db.collection('tasks').insertMany([
-        {
-            description: 'Clean the house',
-            completed: true
-        }, {
-            description: 'Workout',
-            completed: true
-        }, {
-            description: 'Finish work',
-            completed: false
-        }
-    ], (error, result) => {
+    db.collection('tasks').findOne({ _id: new ObjectID('5e2e8a6e97e05f6073aacc0c') }, (error, task) => {
         if (error) {
-            console.log('Unable to insert tasks')
+            return console.log('Unable to fetch')
         }
 
-        console.log(result.ops)
+        console.log(task)
+    })
+
+    cursor = db.collection('tasks').find({ completed: true })
+    cursor.toArray((error, tasks) => {
+        if (error) {
+            return console.log('Unable to fetch')
+        }
+
+        console.log(tasks)
+    })
+    cursor.count((error, tasks) => {
+        if (error) {
+            return console.log('Unable to fetch')
+        }
+
+        console.log(tasks)
     })
 })
