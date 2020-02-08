@@ -94,4 +94,27 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true }, (error, client) => 
     }).catch((error) => {
         console.log(error)
     })
+
+
+    const updateManyPromise = db.collection('tasks').updateMany({
+        completed: false
+    }, {
+        $set: {
+            completed: true
+        }
+    })
+
+    updateManyPromise.then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
+    })
+
+    db.collection('users').deleteMany({
+        age: 26
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
+    })
 })
