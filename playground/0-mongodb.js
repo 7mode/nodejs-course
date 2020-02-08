@@ -65,7 +65,7 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true }, (error, client) => 
         console.log(user)
     })
 
-    cursor = db.collection('users').find({ age: 25 })
+    const cursor = db.collection('users').find({age: 25})
     cursor.toArray((error, users) => {
         if (error) {
             return console.log('Unable to fetch')
@@ -79,5 +79,19 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true }, (error, client) => 
         }
 
         console.log(count)
+    })
+
+    const updateOnePromise = db.collection('users').updateOne({
+        _id: new ObjectID('5e2e76c316480642efab85ab')
+    }, {
+        $set: {
+            age: 34
+        }
+    })
+
+    updateOnePromise.then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
     })
 })
