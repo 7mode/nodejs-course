@@ -5,6 +5,15 @@ const taskRouter = require('./routers/task')
 
 const app = express()
 const port = process.env.PORT || 3000
+const isInMaintenanceMode = false
+
+app.use((req, res, next) => {
+    if (isInMaintenanceMode) {
+        res.status(503).send('Site is currently down. Check back soon')
+    } else {
+        next()
+    }
+})
 
 app.use(express.json())
 app.use(userRouter)
